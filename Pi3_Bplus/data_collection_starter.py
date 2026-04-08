@@ -3,6 +3,9 @@ import os
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
+def generate_all_runs_csv_file():
+    filepath = os.path.join(_DIR, "dataset", "manifests", "all_runs.csv")
+
 if __name__ == "__main__":
     
     filepath = os.path.join(_DIR, "waveform_definitions.json")
