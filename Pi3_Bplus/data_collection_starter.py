@@ -1,11 +1,16 @@
 import json
+import os
+
+_DIR = os.path.dirname(os.path.abspath(__file__))
 
 if __name__ == "__main__":
     
-    with open("./Pi3_Bplus/waveform_definitions.json", "r", encoding="utf-8") as f:
+    filepath = os.path.join(_DIR, "waveform_definitions.json")
+    with open(filepath, "r", encoding="utf-8") as f:
         waveform_defs = json.load(f)
 
-    with open("./Pi3_Bplus/brake_definitions.json", "r", encoding="utf-8") as f:
+    filepath = os.path.join(_DIR, "brake_definitions.json")
+    with open(filepath, "r", encoding="utf-8") as f:
         brake_defs = json.load(f)
 
     print(f"Waveform Definitions: {waveform_defs}")
