@@ -2,151 +2,151 @@
     "G1": {
         "W1": {
             "Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L3", "timeSec": [5, 10]},
-                    3: {"level": "L4", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L3", "timeSec": [5, 10]},
+                    "3": {"level": "L4", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L4", "timeSec": [5, 10]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L4", "timeSec": [5, 10]}
                 }
             },
             "No Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L1", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L1", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [21, 40]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [21, 40]}
                 }
             }
         },
         "W2": {
             "Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L3", "timeSec": [5, 10]},
-                    3: {"level": "L4", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L3", "timeSec": [5, 10]},
+                    "3": {"level": "L4", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L4", "timeSec": [5, 10]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L4", "timeSec": [5, 10]}
                 }
             },
             "No Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L1", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L1", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [21, 40]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [21, 40]}
                 }
             }          
         },
         "W3": {
             "Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L3", "timeSec": [5, 10]},
-                    3: {"level": "L4", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L3", "timeSec": [5, 10]},
+                    "3": {"level": "L4", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L4", "timeSec": [5, 10]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L4", "timeSec": [5, 10]}
                 }
             },
             "No Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L1", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L1", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [21, 40]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [21, 40]}
                 }
             }          
         }
@@ -154,307 +154,307 @@
     "G2": {
         "W1": {
             "Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L3", "timeSec": [5, 10]},
-                    3: {"level": "L4", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L3", "timeSec": [5, 10]},
+                    "3": {"level": "L4", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L4", "timeSec": [5, 10]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L4", "timeSec": [5, 10]}
                 }
             },
             "No Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L1", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L1", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]}                    
+                "2": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]}                    
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [21, 40]}                    
+                "4": {
+                    "0": {"level": "L2", "timeSec": [21, 40]}                    
                 }
             }
         },
         "W2": {
             "Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L3", "timeSec": [5, 10]},
-                    3: {"level": "L4", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L3", "timeSec": [5, 10]},
+                    "3": {"level": "L4", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L1", "timeSec": [11, 20]},
-                    1: {"level": "L2", "timeSec": [11, 20]},
-                    2: {"level": "L3", "timeSec": [11, 20]},
-                    3: {"level": "L4", "timeSec": [11, 20]}
+                "4": {
+                    "0": {"level": "L1", "timeSec": [11, 20]},
+                    "1": {"level": "L2", "timeSec": [11, 20]},
+                    "2": {"level": "L3", "timeSec": [11, 20]},
+                    "3": {"level": "L4", "timeSec": [11, 20]}
                 }
             },
             "No Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L1", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L1", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]}                    
+                "2": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]}                    
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L3", "timeSec": [5, 10]},
-                    3: {"level": "L2", "timeSec": [5, 10]}                     
+                "4": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L3", "timeSec": [5, 10]},
+                    "3": {"level": "L2", "timeSec": [5, 10]}                     
                 }
-            },
+            }
         },
         "W3": {
-            "Fail":{
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L3", "timeSec": [5, 10]},
-                    3: {"level": "L4", "timeSec": [5, 10]}
+            "Fail": {
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L3", "timeSec": [5, 10]},
+                    "3": {"level": "L4", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L4", "timeSec": [5, 10]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L4", "timeSec": [5, 10]}
                 }
             },
             "No Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L1", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L1", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [21, 40]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [21, 40]}
                 }
             }
         },
         "W4-A": {                    
             "Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L3", "timeSec": [5, 10]},
-                    3: {"level": "L4", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L3", "timeSec": [5, 10]},
+                    "3": {"level": "L4", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L4", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L4", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "4": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 }
             },
             "No Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L1", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L1", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [21, 40]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [21, 40]}
                 }
-            },
+            }
         },
         "W4-B": {                    
             "Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L3", "timeSec": [5, 10]},
-                    3: {"level": "L4", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L3", "timeSec": [5, 10]},
+                    "3": {"level": "L4", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]}
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L4", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L4", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "4": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 }
             },
             "No Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L1", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L1", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [21, 40]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [21, 40]}
                 }
-            },
+            }
         },
         "W4-C": {                    
             "Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L3", "timeSec": [5, 10]},
-                    3: {"level": "L4", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L3", "timeSec": [5, 10]},
+                    "3": {"level": "L4", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]}
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L4", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L4", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]},
-                    4: {"level": "L4", "timeSec": [5, 10]}
+                "4": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]},
+                    "4": {"level": "L4", "timeSec": [5, 10]}
                 }
             },
             "No Fail": {
-                1: {
-                    0: {"level": "L1", "timeSec": [5, 10]},
-                    1: {"level": "L2", "timeSec": [5, 10]},
-                    2: {"level": "L1", "timeSec": [5, 10]}
+                "1": {
+                    "0": {"level": "L1", "timeSec": [5, 10]},
+                    "1": {"level": "L2", "timeSec": [5, 10]},
+                    "2": {"level": "L1", "timeSec": [5, 10]}
                 },
-                2: {
-                    0: {"level": "L0", "timeSec": [5, 10]},
-                    1: {"level": "L1", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]},
-                    3: {"level": "L3", "timeSec": [5, 10]}
+                "2": {
+                    "0": {"level": "L0", "timeSec": [5, 10]},
+                    "1": {"level": "L1", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]},
+                    "3": {"level": "L3", "timeSec": [5, 10]}
                 },
-                3: {
-                    0: {"level": "L2", "timeSec": [5, 10]},
-                    1: {"level": "L3", "timeSec": [5, 10]},
-                    2: {"level": "L2", "timeSec": [5, 10]}
+                "3": {
+                    "0": {"level": "L2", "timeSec": [5, 10]},
+                    "1": {"level": "L3", "timeSec": [5, 10]},
+                    "2": {"level": "L2", "timeSec": [5, 10]}
                 },
-                4: {
-                    0: {"level": "L2", "timeSec": [21, 40]}
+                "4": {
+                    "0": {"level": "L2", "timeSec": [21, 40]}
                 }
-            },
-        },  
-    },
+            }
+        }
+    }
 }

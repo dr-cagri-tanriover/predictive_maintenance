@@ -1,48 +1,48 @@
 {
-    "G1":{
+    "G1": {
         "W1": {
-            0: {"duty": 25, "timeSec": []}
+            "0": {"duty": 25, "timeSec": []}
         },
         "W2": {
-            0: {"duty": 50, "timeSec": []}
+            "0": {"duty": 50, "timeSec": []}
         },
         "W3": {
-            0: {"duty": 75, "timeSec": []}
-        }  
+            "0": {"duty": 75, "timeSec": []}
+        }
     },
     "G2": {
         "W1": {
-            0: {"duty": 25, "timeSec": [5]},
-            1: {"duty": 50, "timeSec": [7]},
-            2: {"duty": 75, "timeSec": [9]}
+            "0": {"duty": 25, "timeSec": [5]},
+            "1": {"duty": 50, "timeSec": [7]},
+            "2": {"duty": 75, "timeSec": [9]}
         },
-        "W2":  {
-            0: {"duty": 25, "timeSec": [5, 10]},
-            1: {"duty": 50, "timeSec": [5, 10]},
-            2: {"duty": 75, "timeSec": [5, 10]}
+        "W2": {
+            "0": {"duty": 25, "timeSec": [5, 10]},
+            "1": {"duty": 50, "timeSec": [5, 10]},
+            "2": {"duty": 75, "timeSec": [5, 10]}
         },
         "W3": {
-            0: {"duty": 25, "timeSec": [8]},
-            1: {"duty": 50, "timeSec": [8]},
-            2: {"duty": 75, "timeSec": [8]}
+            "0": {"duty": 25, "timeSec": [8]},
+            "1": {"duty": 50, "timeSec": [8]},
+            "2": {"duty": 75, "timeSec": [8]}
         },
         "W4-A": {
-            0: {"duty": 25, "timeSec": [5, 10]},
-            1: {"duty": 75, "timeSec": [5, 10]},
-            2: {"duty": 50, "timeSec": [5, 10]},
-            3: {"duty": 75, "timeSec": [5, 10]}
+            "0": {"duty": 25, "timeSec": [5, 10]},
+            "1": {"duty": 75, "timeSec": [5, 10]},
+            "2": {"duty": 50, "timeSec": [5, 10]},
+            "3": {"duty": 75, "timeSec": [5, 10]}
         },
         "W4-B": {
-            0: {"duty": 75, "timeSec": [5, 10]},
-            1: {"duty": 50, "timeSec": [5, 10]},
-            2: {"duty": 25, "timeSec": [5, 10]},
-            3: {"duty": 50, "timeSec": [5, 10]}
+            "0": {"duty": 75, "timeSec": [5, 10]},
+            "1": {"duty": 50, "timeSec": [5, 10]},
+            "2": {"duty": 25, "timeSec": [5, 10]},
+            "3": {"duty": 50, "timeSec": [5, 10]}
         },
         "W4-C": {
-            0: {"duty": 50, "timeSec": [5, 10]},
-            1: {"duty": 25, "timeSec": [5, 10]},
-            2: {"duty": 75, "timeSec": [5, 10]},
-            3: {"duty": 25, "timeSec": [5, 10]}
+            "0": {"duty": 50, "timeSec": [5, 10]},
+            "1": {"duty": 25, "timeSec": [5, 10]},
+            "2": {"duty": 75, "timeSec": [5, 10]},
+            "3": {"duty": 25, "timeSec": [5, 10]}
         }
     }
 }
