@@ -1,24 +1,15 @@
 import json
 import os
 import pandas as pd
+import sys
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
-def read_waveform_definitions(source_folder: str) -> dict:
-    in_waveform_filepath = os.path.join(source_folder, "waveform_definitions.json")
+_REPO_ROOT = os.path.dirname(_DIR)  # parent of Pi3_Bplus
+if _REPO_ROOT not in sys.path:
+    sys.path.insert(0, _REPO_ROOT)
 
-    with open(in_waveform_filepath, "r", encoding="utf-8") as f:
-        waveforms_dict = json.load(f) 
-
-    return waveforms_dict
-
-def read_brake_definitions(source_folder: str) -> dict:
-    in_brake_filepath = os.path.join(source_folder, "brake_definitions.json")
-
-    with open(in_brake_filepath, "r", encoding="utf-8") as f:
-        brake_dict = json.load(f)
-
-    return brake_dict
+from Pi3_Bplus.data_collection_starter import read_waveform_definitions, read_brake_definitions
 
 def generate_all_runs_init_csv_file():
     parent_folder = os.path.dirname(_DIR)  # one above this script file
