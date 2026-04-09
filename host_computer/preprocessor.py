@@ -2,8 +2,23 @@ import json
 import os
 import pandas as pd
 
-
 _DIR = os.path.dirname(os.path.abspath(__file__))
+
+def read_waveform_definitions(source_folder: str) -> dict:
+    in_waveform_filepath = os.path.join(source_folder, "waveform_definitions.json")
+
+    with open(in_waveform_filepath, "r", encoding="utf-8") as f:
+        waveforms_dict = json.load(f) 
+
+    return waveforms_dict
+
+def read_brake_definitions(source_folder: str) -> dict:
+    in_brake_filepath = os.path.join(source_folder, "brake_definitions.json")
+
+    with open(in_brake_filepath, "r", encoding="utf-8") as f:
+        brake_dict = json.load(f)
+
+    return brake_dict
 
 def generate_all_runs_init_csv_file():
     parent_folder = os.path.dirname(_DIR)  # one above this script file
@@ -16,14 +31,11 @@ def generate_all_runs_init_csv_file():
 
     out_filepath = os.path.join(manifests_folder, "all_runs_init.csv")
 
-    in_waveform_filepath = os.path.join(parent_folder, "Pi3_Bplus", "waveform_definitions.json")
-    in_brake_filepath = os.path.join(parent_folder, "Pi3_Bplus", "brake_definitions.json")
+    in_waveform_folder = os.path.join(parent_folder, "Pi3_Bplus")
+    in_brake_folder = os.path.join(parent_folder, "Pi3_Bplus")
 
-    with open(in_waveform_filepath, "r", encoding="utf-8") as f:
-        waveforms_dict = json.load(f) 
-
-    with open(in_brake_filepath, "r", encoding="utf-8") as f:
-        brake_dict = json.load(f)
+    waveforms_dict = read_waveform_definitions(in_waveform_folder)
+    brake_dict = read_brake_definitions(in_brake_folder)
 
     # all_runs.csv header columns
     columns = ["run_id", "wave_group", "wave_id", "brake_id"]
