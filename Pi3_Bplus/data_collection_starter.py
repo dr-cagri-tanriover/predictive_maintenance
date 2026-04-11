@@ -61,7 +61,7 @@ def get_waveform_and_brake_sequence_details(runDict: dict) -> dict:
         # Update the run dictionary with the waveform details
         duty = wave_dict[waveKey]['duty']
 
-        runDict['(duty, duration)'].append((duty, duration))
+        runDict['(duty, duration)'].append([duty, duration])
 
     # Process the brake details next
     brake_mode = runDict['brake_id'].split('-')[0]  # string
@@ -72,7 +72,7 @@ def get_waveform_and_brake_sequence_details(runDict: dict) -> dict:
         durMin, durMax = brake_dict[brakeKey]['timeSec'][0], brake_dict[brakeKey]['timeSec'][1]
         duration = random.randint(durMin, durMax)  # inclusive of the boundaries
         level = int(brake_dict[brakeKey]['level'][-1]) # extract the integer digit of the level string
-        runDict['(level, duration)'].append((level, duration))
+        runDict['(level, duration)'].append([level, duration])
 
     return runDict  # modified dictionary is returned
 

@@ -3,73 +3,80 @@
         "W1": {
             "Fail": {
                 "1": {
-                    "repeat": 3,
+                    "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L3", "timeSec": [5, 10]},
-                        "3": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L4", "timeSec": [21, 31]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
+
                     }
                 },
                 "2": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [34, 50]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
+
                     }
                 },
                 "3": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [27, 40]},
+                        "1": {"level": "L1", "timeSec": [17, 25]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "4": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L4", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             },
             "No_Fail": {
                 "1": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L1", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [28, 42]},
+                        "2": {"level": "L2", "timeSec": [28, 42]},
+                        "3": {"level": "L1", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [31, 46]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
-                    "repeat": 1,
+                    "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]}
-                    }
-                },
-                "4": {
-                    "repeat": 1,
-                    "sequence": {
-                        "0": {"level": "L2", "timeSec": [21, 40]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L2", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             }
@@ -77,73 +84,78 @@
         "W2": {
             "Fail": {
                 "1": {
-                    "repeat": 3,
+                    "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L3", "timeSec": [5, 10]},
-                        "3": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L4", "timeSec": [21, 31]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [34, 50]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [27, 40]},
+                        "1": {"level": "L1", "timeSec": [17, 25]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "4": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L4", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             },
             "No_Fail": {
                 "1": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L1", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [28, 42]},
+                        "2": {"level": "L2", "timeSec": [28, 42]},
+                        "3": {"level": "L1", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [31, 46]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
-                    "repeat": 1,
+                    "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]}
-                    }
-                },
-                "4": {
-                    "repeat": 1,
-                    "sequence": {
-                        "0": {"level": "L2", "timeSec": [21, 40]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L2", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             }
@@ -151,73 +163,78 @@
         "W3": {
             "Fail": {
                 "1": {
-                    "repeat": 3,
+                    "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L3", "timeSec": [5, 10]},
-                        "3": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L4", "timeSec": [21, 31]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [34, 50]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [27, 40]},
+                        "1": {"level": "L1", "timeSec": [17, 25]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "4": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L4", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             },
             "No_Fail": {
                 "1": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L1", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [28, 42]},
+                        "2": {"level": "L2", "timeSec": [28, 42]},
+                        "3": {"level": "L1", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [31, 46]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
-                    "repeat": 1,
+                    "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]}
-                    }
-                },
-                "4": {
-                    "repeat": 1,
-                    "sequence": {
-                        "0": {"level": "L2", "timeSec": [21, 40]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L2", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             }
@@ -227,40 +244,46 @@
         "W1": {
             "Fail": {
                 "1": {
-                    "repeat": 4,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L3", "timeSec": [5, 10]},
-                        "3": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L4", "timeSec": [21, 31]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [17, 25]},
+                        "2": {"level": "L2", "timeSec": [34, 50]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [27, 40]},
+                        "1": {"level": "L1", "timeSec": [17, 25]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "4": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L4", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             },
@@ -268,32 +291,31 @@
                 "1": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L1", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [28, 42]},
+                        "2": {"level": "L2", "timeSec": [28, 42]},
+                        "3": {"level": "L1", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [31, 46]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]}
-                    }
-                },
-                "4": {
-                    "repeat": 1,
-                    "sequence": {
-                        "0": {"level": "L2", "timeSec": [21, 40]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L2", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             }
@@ -301,41 +323,36 @@
         "W2": {
             "Fail": {
                 "1": {
-                    "repeat": 5,
+                    "repeat": 4,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L3", "timeSec": [5, 10]},
-                        "3": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L4", "timeSec": [21, 31]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
                     "repeat": 4,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [34, 50]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
-                    "repeat": 3,
+                    "repeat": 4,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
-                    }
-                },
-                "4": {
-                    "repeat": 3,
-                    "sequence": {
-                        "0": {"level": "L1", "timeSec": [11, 20]},
-                        "1": {"level": "L2", "timeSec": [11, 20]},
-                        "2": {"level": "L3", "timeSec": [11, 20]},
-                        "3": {"level": "L4", "timeSec": [11, 20]}
+                        "0": {"level": "L0", "timeSec": [27, 40]},
+                        "1": {"level": "L1", "timeSec": [17, 25]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             },
@@ -343,35 +360,42 @@
                 "1": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L1", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [28, 42]},
+                        "2": {"level": "L2", "timeSec": [28, 42]},
+                        "3": {"level": "L1", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [31, 46]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L2", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "4": {
-                    "repeat": 1,
+                    "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L3", "timeSec": [5, 10]},
-                        "3": {"level": "L2", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L2", "timeSec": [21, 31]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             }
@@ -379,40 +403,46 @@
         "W3": {
             "Fail": {
                 "1": {
-                    "repeat": 4,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L3", "timeSec": [5, 10]},
-                        "3": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L4", "timeSec": [21, 31]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [17, 25]},
+                        "2": {"level": "L2", "timeSec": [34, 50]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [27, 40]},
+                        "1": {"level": "L1", "timeSec": [17, 25]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "4": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L4", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             },
@@ -420,32 +450,31 @@
                 "1": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L1", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [28, 42]},
+                        "2": {"level": "L2", "timeSec": [28, 42]},
+                        "3": {"level": "L1", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [31, 46]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]}
-                    }
-                },
-                "4": {
-                    "repeat": 1,
-                    "sequence": {
-                        "0": {"level": "L2", "timeSec": [21, 40]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L2", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             }
@@ -453,40 +482,46 @@
         "W4-A": {
             "Fail": {
                 "1": {
-                    "repeat": 4,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L3", "timeSec": [5, 10]},
-                        "3": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L4", "timeSec": [21, 31]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [34, 50]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L4", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "4": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [27, 40]},
+                        "1": {"level": "L1", "timeSec": [17, 25]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             },
@@ -494,32 +529,31 @@
                 "1": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L1", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [28, 42]},
+                        "2": {"level": "L2", "timeSec": [28, 42]},
+                        "3": {"level": "L1", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [31, 46]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]}
-                    }
-                },
-                "4": {
-                    "repeat": 1,
-                    "sequence": {
-                        "0": {"level": "L2", "timeSec": [21, 40]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L2", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             }
@@ -527,40 +561,46 @@
         "W4-B": {
             "Fail": {
                 "1": {
-                    "repeat": 4,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L3", "timeSec": [5, 10]},
-                        "3": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L4", "timeSec": [21, 31]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [34, 50]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L4", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "4": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [27, 40]},
+                        "1": {"level": "L1", "timeSec": [17, 25]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             },
@@ -568,32 +608,31 @@
                 "1": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L1", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [28, 42]},
+                        "2": {"level": "L2", "timeSec": [28, 42]},
+                        "3": {"level": "L1", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [31, 46]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]}
-                    }
-                },
-                "4": {
-                    "repeat": 1,
-                    "sequence": {
-                        "0": {"level": "L2", "timeSec": [21, 40]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L2", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             }
@@ -601,40 +640,46 @@
         "W4-C": {
             "Fail": {
                 "1": {
-                    "repeat": 4,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L3", "timeSec": [5, 10]},
-                        "3": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L4", "timeSec": [21, 31]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [34, 50]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L4", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "4": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]},
-                        "4": {"level": "L4", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [27, 40]},
+                        "1": {"level": "L1", "timeSec": [17, 25]},
+                        "2": {"level": "L2", "timeSec": [17, 25]},
+                        "3": {"level": "L3", "timeSec": [17, 25]},
+                        "4": {"level": "L4", "timeSec": [17, 25]},
+                        "5": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             },
@@ -642,32 +687,31 @@
                 "1": {
                     "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L1", "timeSec": [5, 10]},
-                        "1": {"level": "L2", "timeSec": [5, 10]},
-                        "2": {"level": "L1", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L1", "timeSec": [28, 42]},
+                        "2": {"level": "L2", "timeSec": [28, 42]},
+                        "3": {"level": "L1", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "2": {
-                    "repeat": 2,
+                    "repeat": 3,
                     "sequence": {
-                        "0": {"level": "L0", "timeSec": [5, 10]},
-                        "1": {"level": "L1", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]},
-                        "3": {"level": "L3", "timeSec": [5, 10]}
+                        "0": {"level": "L0", "timeSec": [31, 46]},
+                        "1": {"level": "L1", "timeSec": [21, 31]},
+                        "2": {"level": "L2", "timeSec": [21, 31]},
+                        "3": {"level": "L3", "timeSec": [21, 31]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 },
                 "3": {
                     "repeat": 2,
                     "sequence": {
-                        "0": {"level": "L2", "timeSec": [5, 10]},
-                        "1": {"level": "L3", "timeSec": [5, 10]},
-                        "2": {"level": "L2", "timeSec": [5, 10]}
-                    }
-                },
-                "4": {
-                    "repeat": 1,
-                    "sequence": {
-                        "0": {"level": "L2", "timeSec": [21, 40]}
+                        "0": {"level": "L0", "timeSec": [10, 15]},
+                        "1": {"level": "L2", "timeSec": [28, 42]},
+                        "2": {"level": "L3", "timeSec": [28, 42]},
+                        "3": {"level": "L2", "timeSec": [28, 42]},
+                        "4": {"level": "L0", "timeSec": [10, 15]}
                     }
                 }
             }
