@@ -3,41 +3,23 @@ import os
 import csv
 import random
 import copy
+import sys
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 _RANDOM_SEED = 1974
 
-def read_waveform_definitions(source_folder: str) -> dict:
-    in_waveform_filepath = os.path.join(source_folder, "waveform_definitions.json")
+_REPO_ROOT = os.path.dirname(_DIR)  # parent of Pi3_Bplus
+if _REPO_ROOT not in sys.path:
+    sys.path.insert(0, _REPO_ROOT)
 
-    with open(in_waveform_filepath, "r", encoding="utf-8") as f:
-        waveforms_dict = json.load(f) 
-
-    return waveforms_dict
-
-
-def read_brake_definitions(source_folder: str) -> dict:
-    in_brake_filepath = os.path.join(source_folder, "brake_definitions.json")
-
-    with open(in_brake_filepath, "r", encoding="utf-8") as f:
-        brake_dict = json.load(f)
-
-    return brake_dict
-
-
-def read_all_runs_init_csv_file():
-    filepath = os.path.join(_DIR, "dataset", "manifests", "all_runs_init.csv")
-    
-    with open(filepath, "r", encoding="utf-8") as f:
-        listDicts = list(csv.DictReader(f))
-
-    return listDicts
-
+from utilities.file_access import read_waveform_definitions, read_brake_definitions, read_all_runs_init_csv_file
 
 def get_waveform_and_brake_sequence_details(runDict: dict) -> dict:
     
-    waveDict = read_waveform_definitions(_DIR)
-    brakeDict = read_brake_definitions(_DIR)
+    parent_folder = os.path.dirname(_DIR)  # one folder above this script file
+
+    waveDict = read_waveform_definitions(os.path.join(parent_folder, "common"))
+    brakeDict = read_brake_definitions(os.path.join(parent_folder, "common"))
     
     # Process waveform details first
     wave_dict = waveDict[runDict['wave_group']][runDict['wave_id']]
@@ -67,14 +49,17 @@ def get_waveform_and_brake_sequence_details(runDict: dict) -> dict:
     brake_mode = runDict['brake_id'].split('-')[0]  # string
     brake_idx = runDict['brake_id'].split('-')[1]  # string
 
+    runDict['run_duration_sec_requested'] = 0  # will be accumulated in the for loop with random time picks
     brake_dict = brakeDict[runDict['wave_group']][runDict['wave_id']][brake_mode][brake_idx]['sequence']
     for brakeKey in brake_dict.keys():
         durMin, durMax = brake_dict[brakeKey]['timeSec'][0], brake_dict[brakeKey]['timeSec'][1]
         duration = random.randint(durMin, durMax)  # inclusive of the boundaries
         level = int(brake_dict[brakeKey]['level'][-1]) # extract the integer digit of the level string
         runDict['(level, duration)'].append([level, duration])
+        runDict['run_duration_sec_requested'] += duration  # accumulated duration of the run
 
     return runDict  # modified dictionary is returned
+
 
 
 def run_data_collection():
@@ -83,7 +68,7 @@ def run_data_collection():
 
     ########### SET USER DEFINED PARAMETERS BELOW ###########
     # User defined parameters for the data collection
-    run_id_range = (1, 169)  # inclusive range of run ids. Zero is invalid!
+    run_id_range = (1, 170)  # inclusive range of run ids. Zero is invalid!
     session_id = 1  # make sure there is a matching session file under sessions folder
     operator_notes = f"This is a test run for session {session_id:04d}"  # Update note as needed before execution.
     pwm_freq_hz = 1000
@@ -99,7 +84,8 @@ def run_data_collection():
         "pwm_freq_hz": None,
         "sample_rate_hz": None,
         "firmware_version": None,
-        "run_duration_sec": None,
+        "run_duration_sec_requested": None,
+        "run_duration_sec_actual": None,
         "wave_group": None,
         "wave_id": None,
         "(duty, duration)": [],
@@ -153,7 +139,7 @@ def run_data_collection():
             # Other async tasks will buffer incoming data from Pi Zero and 
             # Pi Pico, and 
 
-            run_meta_dict["run_duration_sec"] = "TBD"  # Will be populated based on Pi Zero timer.
+            run_meta_dict["run_duration_sec_actual"] = "TBD"  # Will be populated based on Pi Zero timer.
 
             # Write the metadata dictionary to a file
             with open(metadata_filepath, "w", encoding="utf-8") as f:

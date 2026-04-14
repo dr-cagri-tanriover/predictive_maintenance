@@ -5,14 +5,15 @@ import sys
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
-_REPO_ROOT = os.path.dirname(_DIR)  # parent of Pi3_Bplus
+_REPO_ROOT = os.path.dirname(_DIR)  # parent of host_computer
 if _REPO_ROOT not in sys.path:
     sys.path.insert(0, _REPO_ROOT)
 
-from Pi3_Bplus.data_collection_starter import read_waveform_definitions, read_brake_definitions
+#from Pi3_Bplus.data_collection_starter import read_waveform_definitions, read_brake_definitions
+from utilities.file_access import read_waveform_definitions, read_brake_definitions
 
 def generate_all_runs_init_csv_file():
-    parent_folder = os.path.dirname(_DIR)  # one above this script file
+    parent_folder = os.path.dirname(_DIR)  # one folder above this script file
 
     dataset_folder = os.path.join(parent_folder, "Pi3_Bplus", "dataset")
     manifests_folder = os.path.join(dataset_folder, "manifests")
@@ -22,8 +23,8 @@ def generate_all_runs_init_csv_file():
 
     out_filepath = os.path.join(manifests_folder, "all_runs_init.csv")
 
-    in_waveform_folder = os.path.join(parent_folder, "Pi3_Bplus")
-    in_brake_folder = os.path.join(parent_folder, "Pi3_Bplus")
+    in_waveform_folder = os.path.join(parent_folder, "common")
+    in_brake_folder = os.path.join(parent_folder, "common")
 
     waveforms_dict = read_waveform_definitions(in_waveform_folder)
     brake_dict = read_brake_definitions(in_brake_folder)
@@ -55,6 +56,9 @@ def generate_all_runs_init_csv_file():
     df.to_csv(out_filepath, index=False)
 
 
+
+
 if __name__ == "__main__":
     
-    generate_all_runs_init_csv_file()
+    generate_all_runs_init_csv_file()  # STEP 1: Generate the all_runs_init.csv file
+    #generate_all_run_medatdata_json_files()  # STEP 2: Generate the all_run_medatdata.json files using all_runs_init.csv
