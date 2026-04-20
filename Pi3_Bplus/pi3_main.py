@@ -2,7 +2,8 @@
 Async serial orchestrator template for Raspberry Pi 3 Model B+ (CPython 3.x).
 
 What this file gives you:
-- A synchronous bootstrap section before the event loop starts.
+- A synchronous bootstrap section before the event loop starts (CLI args,
+  optional ``pi3_serial_config.json``, or ``PM_UART_PORT`` / ``PM_UART_BAUD``).
 - An async initialization phase.
 - One RX task to process incoming serial bytes/frames.
 - One TX task to send queued messages as framed packets.
@@ -13,7 +14,9 @@ Dependencies:
 - pyserial: `pip install pyserial`
 """
 
+import argparse
 import asyncio
+import json
 import os
 import signal
 import sys
@@ -30,6 +33,7 @@ except ImportError as exc:  # pragma: no cover - bootstrap guard
 
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
+_DEFAULT_SERIAL_CONFIG = os.path.join(_DIR, "pi3_serial_config.json")
 _REPO_ROOT = os.path.dirname(_DIR)
 if _REPO_ROOT not in sys.path:
     sys.path.insert(0, _REPO_ROOT)
@@ -70,12 +74,17 @@ class AsyncSerialOrchestrator:
         - load runtime config
         - initialize any files/sensors/logging
         """
-        self._serial = serial.Serial(
-            port=self.cfg.port,
-            baudrate=self.cfg.baudrate,
-            timeout=self.cfg.timeout_sec,
-            write_timeout=self.cfg.write_timeout_sec,
-        )
+        try:
+            self._serial = serial.Serial(
+                port=self.cfg.port,
+                baudrate=self.cfg.baudrate,
+                timeout=self.cfg.timeout_sec,
+                write_timeout=self.cfg.write_timeout_sec,
+            )
+        except (OSError, serial.SerialException) as exc:
+            raise RuntimeError(
+                f"Could not open serial port {self.cfg.port!r}: {exc}"
+            ) from exc
         await self._send_startup_message()
 
     async def _send_startup_message(self) -> None:
@@ -195,23 +204,105 @@ class AsyncSerialOrchestrator:
         return self._seq
 
 
-def bootstrap_config() -> SerialConfig:
+def bootstrap_config(
+    *,
+    port: Optional[str] = None,
+    baudrate: Optional[int] = None,
+    config_path: Optional[str] = None,
+) -> SerialConfig:
     """
-    Synchronous initialization section (before asyncio event loop starts).
+    Build ``SerialConfig`` before the asyncio loop starts.
 
-    Use this for:
-    - reading env vars or CLI args
-    - validating file paths
-    - selecting serial port based on platform
+    **Precedence (first wins):** ``port`` / ``baudrate`` arguments → JSON
+    config file → ``PM_UART_PORT`` / ``PM_UART_BAUD`` → built-in defaults.
+
+    **JSON config (no shell exports):** if ``config_path`` is omitted, a file
+    named ``pi3_serial_config.json`` next to ``pi3_main.py`` is read when it
+    exists. Example contents::
+
+        {"port": "/dev/serial/by-id/usb-FTDI_...", "baudrate": 115200}
+
+    ``baud`` is accepted as an alias for ``baudrate`` in JSON.
+
+    Serial port (Linux):
+    - Paths under ``/dev/serial/by-id/`` must match udev exactly (see
+      ``ls -l /dev/serial/by-id/``).
+    - User must be in group ``dialout`` (or equivalent) for USB UART access.
     """
-    port = os.environ.get("PM_UART_PORT", "/dev/serial0")
-    baud = int(os.environ.get("PM_UART_BAUD", "115200"))
-    return SerialConfig(port=port, baudrate=baud)
+    cfg_file = config_path if config_path is not None else _DEFAULT_SERIAL_CONFIG
+    file_data: dict = {}
+    if cfg_file and os.path.isfile(cfg_file):
+        with open(cfg_file, encoding="utf-8") as f:
+            file_data = json.load(f)
+
+    raw_port = port if port is not None else file_data.get("port")
+    if raw_port is None or (isinstance(raw_port, str) and not raw_port.strip()):
+        raw_port = os.environ.get("PM_UART_PORT") or "/dev/serial0"
+    raw_port = str(raw_port).strip()
+
+    baud_src = baudrate
+    if baud_src is None:
+        if "baudrate" in file_data:
+            baud_src = file_data["baudrate"]
+        elif "baud" in file_data:
+            baud_src = file_data["baud"]
+    if baud_src is None:
+        raw_baud = (os.environ.get("PM_UART_BAUD") or "115200").strip()
+    else:
+        raw_baud = str(baud_src).strip()
+
+    try:
+        baud = int(raw_baud)
+    except ValueError as exc:
+        raise RuntimeError(
+            f"Invalid baud rate {raw_baud!r}; use an integer such as 115200."
+        ) from exc
+
+    if sys.platform != "win32" and raw_port.startswith("/dev/"):
+        if not os.path.exists(raw_port):
+            raise RuntimeError(
+                f"Serial device path does not exist: {raw_port!r}. "
+                "Run: ls -l /dev/serial/by-id/  and set port in "
+                f"{os.path.basename(cfg_file) or 'pi3_serial_config.json'}, "
+                "or pass --port / set PM_UART_PORT."
+            )
+        port_resolved = os.path.realpath(raw_port)
+    else:
+        port_resolved = raw_port
+
+    return SerialConfig(port=port_resolved, baudrate=baud)
 
 
-async def run() -> None:
-    """Build orchestrator, initialize it, then run until interrupted."""
-    cfg = bootstrap_config()
+def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Pi3 async UART orchestrator (see bootstrap_config precedence)."
+    )
+    parser.add_argument(
+        "--port",
+        default=None,
+        help="Serial device path (overrides JSON config and PM_UART_PORT).",
+    )
+    parser.add_argument(
+        "--baud",
+        type=int,
+        default=None,
+        help="Baud rate (overrides JSON config and PM_UART_BAUD).",
+    )
+    parser.add_argument(git status
+    
+        "--config",
+        default=None,
+        metavar="PATH",
+        help=(
+            f"JSON file with keys port, baudrate (default if file exists: "
+            f"{_DEFAULT_SERIAL_CONFIG})"
+        ),
+    )
+    return parser.parse_args(argv)
+
+
+async def run(cfg: SerialConfig) -> None:
+    """Build orchestrator from *cfg*, initialize it, then run until interrupted."""
     orch = AsyncSerialOrchestrator(cfg)
 
     loop = asyncio.get_running_loop()
@@ -232,8 +323,13 @@ async def run() -> None:
 if __name__ == "__main__":
     t0 = time.time()
     try:
-        # Run co-routine run() in a running loop.
-        asyncio.run(run())  # a runing loop is created and the run() function is executed.
+        _args = parse_args()
+        _cfg = bootstrap_config(
+            port=_args.port,
+            baudrate=_args.baud,
+            config_path=_args.config,
+        )
+        asyncio.run(run(_cfg))
     except KeyboardInterrupt:
         pass
     finally:
