@@ -81,6 +81,10 @@ class AsyncSerialOrchestrator:
                 timeout=self.cfg.timeout_sec,
                 write_timeout=self.cfg.write_timeout_sec,
             )
+            
+            if self._serial != None:
+                print(f"Connected to serial port {self.cfg.port} at {self.cfg.baudrate} baud")
+            
         except (OSError, serial.SerialException) as exc:
             raise RuntimeError(
                 f"Could not open serial port {self.cfg.port!r}: {exc}"
@@ -257,20 +261,8 @@ def bootstrap_config(
         raise RuntimeError(
             f"Invalid baud rate {raw_baud!r}; use an integer such as 115200."
         ) from exc
-
-    if sys.platform != "win32" and raw_port.startswith("/dev/"):
-        if not os.path.exists(raw_port):
-            raise RuntimeError(
-                f"Serial device path does not exist: {raw_port!r}. "
-                "Run: ls -l /dev/serial/by-id/  and set port in "
-                f"{os.path.basename(cfg_file) or 'pi3_serial_config.json'}, "
-                "or pass --port / set PM_UART_PORT."
-            )
-        port_resolved = os.path.realpath(raw_port)
-    else:
-        port_resolved = raw_port
-
-    return SerialConfig(port=port_resolved, baudrate=baud)
+        
+    return SerialConfig(port=raw_port, baudrate=baud)
 
 
 def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
@@ -288,7 +280,7 @@ def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
         default=None,
         help="Baud rate (overrides JSON config and PM_UART_BAUD).",
     )
-    parser.add_argument(git status
+    parser.add_argument(
     
         "--config",
         default=None,
