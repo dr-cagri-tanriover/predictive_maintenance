@@ -7,6 +7,7 @@ What this file gives you:
 - An async initialization phase.
 - One RX task to process incoming serial bytes/frames.
 - One TX task to send queued messages as framed packets.
+- An optional interactive stdin menu (disable with ``--no-menu``).
 - Clean shutdown handling for Ctrl+C and task cancellation.
 
 Dependencies:
@@ -39,7 +40,8 @@ if _REPO_ROOT not in sys.path:
     sys.path.insert(0, _REPO_ROOT)
 
 from utilities.uart_frames import FrameDecoder, build_frame
-
+import metadata_handler as mh
+import utilities.uart_primitives as up
 
 @dataclass
 class SerialConfig:
@@ -54,6 +56,7 @@ class AsyncSerialOrchestrator:
     Template orchestrator:
     - RX loop reads bytes from UART and decodes framed messages.
     - TX loop waits for app messages and writes framed packets.
+    - Interactive menu task reads stdin and dispatches placeholder actions.
     """
 
     def __init__(self, cfg: SerialConfig):
@@ -64,6 +67,12 @@ class AsyncSerialOrchestrator:
         self._shutdown = asyncio.Event()
         self._tasks: list[asyncio.Task] = []
         self._seq = 0
+        self._metadata: dict = {
+            'minRunId': 0,
+            'maxRunId': 0,
+            'currentRunId': 0,
+            'currentRunDict': {}
+        }  # metadata related to available data collection runs
 
     async def initialize(self) -> None:
         """
@@ -74,6 +83,10 @@ class AsyncSerialOrchestrator:
         - load runtime config
         - initialize any files/sensors/logging
         """
+
+        # Get the run metadata for the run ID
+        self._metadata['minRunId'], self._metadata['maxRunId'] = mh.get_minMax_runs()
+
         try:
             self._serial = serial.Serial(
                 port=self.cfg.port,
@@ -95,7 +108,7 @@ class AsyncSerialOrchestrator:
         """Example startup TX message. Replace with your real protocol init."""
         await self.enqueue_tx(msg_type=0x01, src_id=0x10, payload=b"pi3-online")
 
-    async def start(self) -> None:
+    async def start(self, *, interactive_menu: bool = True) -> None:
         """Start RX/TX background tasks and wait until shutdown is requested."""
         if self._serial is None:
             raise RuntimeError("Call initialize() before start().")
@@ -103,10 +116,177 @@ class AsyncSerialOrchestrator:
         self._tasks = [
             asyncio.create_task(self._rx_loop(), name="uart-rx-loop"),
             asyncio.create_task(self._tx_loop(), name="uart-tx-loop"),
-            asyncio.create_task(self._heartbeat_loop(), name="heartbeat-loop"),
+            #asyncio.create_task(self._heartbeat_loop(), name="heartbeat-loop"),
         ]
 
+        if interactive_menu:
+            self._tasks.append(
+                asyncio.create_task(
+                    self._interactive_menu_loop(), name="interactive-menu"
+                )
+            )
+
         await self._shutdown.wait()  # wait for the shutdown event to be set. This is a blocking call.
+
+    async def _interactive_menu_loop(self) -> None:
+        """
+        Simple stdin menu; runs in parallel with RX/TX.
+
+        ``input()`` runs in a worker thread so blocking stdin does not stall
+        the asyncio event loop.
+        """
+        while not self._shutdown.is_set():
+            print(
+                "\n--- Pi3 menu ---\n"
+                "  1) Show connection status\n"
+                "  2) Select run ID/number\n"
+                "  3) Set waveform on Pi Zero\n"
+
+                "  4) Send example UART frame (placeholder)\n"
+                "  5) Data-collection / run action (TODO)\n"
+                "  0) Exit (or quit)\n"
+                "-----------------"
+            )
+            try:
+                raw = await asyncio.to_thread(input, "Choice> ")
+            except EOFError:
+                print("(EOF)")
+                self._shutdown.set()
+                break
+
+            choice = (raw or "").strip().lower()
+            if choice in ("0", "q", "quit", "exit"):
+                print("Exiting.")
+                self._shutdown.set()
+                break
+            if choice == "1":
+                await self.menu_action_show_status()
+            elif choice == "2":
+                await self.menu_action_enter_run_id()
+            elif choice == "3":
+                await self.menu_action_set_waveform()
+            elif choice == "3":
+                await self.menu_action_send_example_frame()
+            elif choice == "4":
+                await self.menu_action_data_collection_placeholder()
+
+            else:
+                print(f"Unknown choice: {choice!r}. Try 1–4 or 0.")
+
+    async def menu_prompt_int(
+        self,
+        prompt: str,
+        *,
+        min_value: Optional[int] = None,
+        max_value: Optional[int] = None,
+    ) -> Optional[int]:
+        """
+        Read an integer from stdin without blocking the event loop.
+
+        Returns ``None`` if the user enters nothing, ``c``/``cancel`` (case
+        insensitive), input is not a valid integer, or value is outside bounds.
+        """
+        try:
+            raw = await asyncio.to_thread(input, prompt)
+        except EOFError:
+            print("(EOF)")
+            return None
+
+        line = (raw or "").strip()
+        if not line or line.lower() in ("c", "cancel"):
+            return None
+
+        try:
+            value = int(line, 10)
+        except ValueError:
+            print(f"Not a valid integer: {line!r}")
+            return None
+
+        if min_value is None:
+            min_value = self._metadata['minRunId']
+        if max_value is None:
+            max_value = self._metadata['maxRunId']
+            if max_value == 0:
+                print("No run metadata available!")
+                return None
+
+        if value < min_value:
+            print(f"Value must be >= {min_value}, got {value}.")
+            return None
+        if value > max_value:
+            print(f"Value must be <= {max_value}, got {value}.")
+            return None
+
+        return value
+
+    async def menu_action_enter_run_id(self) -> None:
+        """
+        Menu entry 4: prompt for a run ID integer, then dispatch to hooks.
+
+        Adjust ``min_value`` / ``max_value`` or replace ``menu_prompt_int`` with
+        your own parser (e.g. zero-padded run codes).
+        """
+        self._metadata['currentRunId'] = await self.menu_prompt_int(
+            "Run ID (integer, blank or 'c' to cancel)> ",
+            min_value=1,
+        )
+
+        if self._metadata['currentRunId'] is None:
+            print("No run ID selected.")
+            return
+
+        await self.on_run_id_entered(self._metadata['currentRunId'])  # reads collection metadata for the run ID
+        #await self.after_run_id_entered(self._metadata['currentRunId'])
+
+    async def on_run_id_entered(self) -> None:
+        """Hook: validate or resolve *run_id* (metadata path, DB key, etc.)."""
+        self._metadata['currentRunDict'] = mh.get_run_metadata(self._metadata['currentRunId'])
+        print(f"Read collection metadata for run_id={self._metadata['currentRunId']}")
+
+    async def after_run_id_entered(self) -> None:
+        """Hook: trigger side effects (UART notify, start collection, …)."""
+        print(f"Valid run_id={self._metadata['currentRunId']}")
+
+    async def menu_action_set_waveform(self) -> None:
+        """Set the waveform on the Pi Zero."""
+
+        if len(self._metadata['currentRunDict']) == 0:
+            print(f"Set valid run ID first. run_id={self._metadata['currentRunId']}")
+            return
+
+        # Get waveform parameters and create the payload for serial transmission.
+        # payload will be binary after encoding.
+        payload = json.dumps(self._metadata['currentRunDict']['(duty, duration)'], separators=(',', ':')).encode('utf-8')
+
+        # Queue the SET_WAVEFORM_SEQ message to the Pi Zero
+        await self.enqueue_tx(
+            msg_type=up.MessageType.SET_WAVEFORM_SEQ,
+            src_id=up.SourceId.RPI3_BPLUS,
+            payload=payload
+        )
+        print(f"Waveform sent to Pi Zero for run_id={self._metadata['currentRunId']}")
+
+    async def menu_action_show_status(self) -> None:
+        """Placeholder: print orchestrator state; replace with real status logic."""
+        open_ = bool(self._serial and self._serial.is_open)
+        print(
+            f"[TODO] port={self.cfg.port!r} baud={self.cfg.baudrate} "
+            f"serial_open={open_} tx_queue_size≈{self._tx_queue.qsize()}"
+        )
+
+    async def menu_action_send_example_frame(self) -> None:
+        """Placeholder: queue a framed test payload; adjust type/src/payload."""
+        await self.enqueue_tx(
+            msg_type=0x02, src_id=0x10, payload=b"menu-test"
+        )
+        print("[TODO] Queued example frame for TX (see menu_action_send_example_frame).")
+
+    async def menu_action_data_collection_placeholder(self) -> None:
+        """Placeholder: hook into run metadata / collection (e.g. data_collection_starter)."""
+        print(
+            "[TODO] Wire this to your workflow, e.g. import and call logic from "
+            "data_collection_starter, or enqueue protocol messages to the peer."
+        )
 
     async def stop(self) -> None:
         """Graceful shutdown: stop tasks and close serial."""
@@ -281,7 +461,6 @@ def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
         help="Baud rate (overrides JSON config and PM_UART_BAUD).",
     )
     parser.add_argument(
-    
         "--config",
         default=None,
         metavar="PATH",
@@ -290,10 +469,15 @@ def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
             f"{_DEFAULT_SERIAL_CONFIG})"
         ),
     )
+    parser.add_argument(
+        "--no-menu",
+        action="store_true",
+        help="Do not start the interactive stdin menu (headless / scripted runs).",
+    )
     return parser.parse_args(argv)
 
 
-async def run(cfg: SerialConfig) -> None:
+async def run(cfg: SerialConfig, *, interactive_menu: bool = True) -> None:
     """Build orchestrator from *cfg*, initialize it, then run until interrupted."""
     orch = AsyncSerialOrchestrator(cfg)
 
@@ -307,7 +491,7 @@ async def run(cfg: SerialConfig) -> None:
 
     await orch.initialize()
     try:
-        await orch.start()
+        await orch.start(interactive_menu=interactive_menu)
     finally:
         await orch.stop()
 
@@ -321,7 +505,7 @@ if __name__ == "__main__":
             baudrate=_args.baud,
             config_path=_args.config,
         )
-        asyncio.run(run(_cfg))
+        asyncio.run(run(_cfg, interactive_menu=not _args.no_menu))
     except KeyboardInterrupt:
         pass
     finally:
