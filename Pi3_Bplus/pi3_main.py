@@ -227,20 +227,18 @@ class AsyncSerialOrchestrator:
         your own parser (e.g. zero-padded run codes).
         """
         self._metadata['currentRunId'] = await self.menu_prompt_int(
-            "Run ID (integer, blank or 'c' to cancel)> ",
-            min_value=1,
+            "Run ID (integer, blank or 'c' to cancel)> "
         )
 
         if self._metadata['currentRunId'] is None:
             print("No run ID selected.")
             return
 
-        await self.on_run_id_entered(self._metadata['currentRunId'])  # reads collection metadata for the run ID
-        #await self.after_run_id_entered(self._metadata['currentRunId'])
+        await self.on_run_id_entered()  # reads collection metadata using self._metadata['currentRunId']
+        # await self.after_run_id_entered()
 
     async def on_run_id_entered(self) -> None:
         """Hook: validate or resolve *run_id* (metadata path, DB key, etc.)."""
-        print(f"Getting run metadata for run_id={self._metadata['currentRunId']}")
         self._metadata['currentRunDict'] = mh.get_run_metadata(self._metadata['currentRunId'])
         print(f"Read collection metadata for run_id={self._metadata['currentRunId']}")
 
