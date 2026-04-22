@@ -240,6 +240,7 @@ class AsyncSerialOrchestrator:
 
     async def on_run_id_entered(self) -> None:
         """Hook: validate or resolve *run_id* (metadata path, DB key, etc.)."""
+        print(f"Getting run metadata for run_id={self._metadata['currentRunId']}")
         self._metadata['currentRunDict'] = mh.get_run_metadata(self._metadata['currentRunId'])
         print(f"Read collection metadata for run_id={self._metadata['currentRunId']}")
 
