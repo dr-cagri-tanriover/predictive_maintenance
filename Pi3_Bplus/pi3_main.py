@@ -46,7 +46,7 @@ import utilities.uart_primitives as up
 @dataclass
 class SerialConfig:
     port: str = "/dev/serial0"  # update for your setup (e.g., /dev/ttyS0, /dev/ttyAMA0)
-    baudrate: int = 921600  #115200
+    baudrate: int = 115200  #115200 (safer rate recommended for Micropython) 921600 (preferred high rate)
     timeout_sec: float = 0.05  # short timeout keeps blocking reads responsive
     write_timeout_sec: float = 0.2
 

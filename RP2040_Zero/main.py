@@ -9,6 +9,9 @@ BRAKE_L2_PIN = 6 # Set up brake on pin GP6
 BRAKE_L3_PIN = 7 # Set up brake on pin GP7
 BRAKE_L4_PIN = 8 # Set up brake on pin GP8
 
+UART_TX_PIN = 12 # Set up UART0 TX on pin GP12
+UART_RX_PIN = 13 # Set up UART0 RX on pin GP13
+
 #IRQ_BLUE_LED_PIN = 7  # GP7 drives a separate LED via Timer IRQ
 #IRQ_YELLOW_LED_PIN = 8  # GP8 drives a separate LED via Timer IRQ
 
