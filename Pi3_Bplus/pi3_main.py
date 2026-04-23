@@ -151,8 +151,6 @@ class AsyncSerialOrchestrator:
                 "  8) Get PWM freq from Pi Zero\n"
                 "  9) Start capture on Pi Zero\n"
                 "  10) Stop capture on Pi Zero\n"
-                "  100) Send example UART frame (placeholder)\n"
-                "  101) Data-collection / run action (TODO)\n"
                 "  0) Exit (or quit)\n"
                 "-----------------"
             )
