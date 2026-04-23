@@ -102,11 +102,14 @@ class AsyncSerialOrchestrator:
             raise RuntimeError(
                 f"Could not open serial port {self.cfg.port!r}: {exc}"
             ) from exc
-        await self._send_startup_message()
 
-    async def _send_startup_message(self) -> None:
-        """Example startup TX message. Replace with your real protocol init."""
-        await self.enqueue_tx(msg_type=0x01, src_id=0x10, payload=b"pi3-online")
+        print(f"Pi3 B+ online !")
+
+        #await self._send_startup_message()
+
+    # async def _send_startup_message(self) -> None:
+    #     """Example startup TX message. Replace with your real protocol init."""
+    #     await self.enqueue_tx(msg_type=0x01, src_id=0x10, payload=b"pi3-online")
 
     async def start(self, *, interactive_menu: bool = True) -> None:
         """Start RX/TX background tasks and wait until shutdown is requested."""
@@ -140,10 +143,16 @@ class AsyncSerialOrchestrator:
                 "\n--- Pi3 menu ---\n"
                 "  1) Show connection status\n"
                 "  2) Select run ID/number\n"
-                "  3) Set waveform on Pi Zero\n"
-
-                "  4) Send example UART frame (placeholder)\n"
-                "  5) Data-collection / run action (TODO)\n"
+                "  3) Set waveform seq on Pi Zero\n"
+                "  4) Get waveform seq from Pi Zero\n"
+                "  5) Set brake seq on Pi Zero\n"
+                "  6) Get brake seq from Pi Zero\n"
+                "  7) Set PWM freq on Pi Zero\n"
+                "  8) Get PWM freq from Pi Zero\n"
+                "  9) Start capture on Pi Zero\n"
+                "  10) Stop capture on Pi Zero\n"
+                "  100) Send example UART frame (placeholder)\n"
+                "  101) Data-collection / run action (TODO)\n"
                 "  0) Exit (or quit)\n"
                 "-----------------"
             )
@@ -165,11 +174,20 @@ class AsyncSerialOrchestrator:
                 await self.menu_action_enter_run_id()
             elif choice == "3":
                 await self.menu_action_set_waveform()
-            elif choice == "3":
-                await self.menu_action_send_example_frame()
             elif choice == "4":
-                await self.menu_action_data_collection_placeholder()
-
+                await self.menu_action_get_waveform()
+            elif choice == "5":
+                await self.menu_action_set_brake()
+            elif choice == "6":
+                await self.menu_action_get_brake()
+            elif choice == "7":
+                await self.menu_action_set_pwm_freq()
+            elif choice == "8":
+                await self.menu_action_get_pwm_freq()
+            elif choice == "9":
+                await self.menu_action_start_capture()
+            elif choice == "10":
+                await self.menu_action_stop_capture()
             else:
                 print(f"Unknown choice: {choice!r}. Try 1–4 or 0.")
 
@@ -219,6 +237,20 @@ class AsyncSerialOrchestrator:
 
         return value
 
+    ###########################################################
+    # MENU ACTION DEFINITIONS START HERE
+    ###########################################################
+
+    async def menu_action_show_status(self) -> None:
+        """Placeholder: print orchestrator state; replace with real status logic."""
+        open_ = bool(self._serial and self._serial.is_open)
+        print(
+            f"Pi3 serial port={self.cfg.port!r}\n"
+            f"Pi3 baudrate={self.cfg.baudrate}\n"
+            f"serial_open={open_}\n"
+            f"tx_queue_size≈{self._tx_queue.qsize()}\n"
+        )
+
     async def menu_action_enter_run_id(self) -> None:
         """
         Menu entry 4: prompt for a run ID integer, then dispatch to hooks.
@@ -247,7 +279,7 @@ class AsyncSerialOrchestrator:
         print(f"Valid run_id={self._metadata['currentRunId']}")
 
     async def menu_action_set_waveform(self) -> None:
-        """Set the waveform on the Pi Zero."""
+        """Set the waveform sequence to use on the Pi Zero."""
 
         if len(self._metadata['currentRunDict']) == 0:
             print(f"Set valid run ID first. run_id={self._metadata['currentRunId']}")
@@ -263,29 +295,100 @@ class AsyncSerialOrchestrator:
             src_id=up.SourceId.RPI3_BPLUS,
             payload=payload
         )
-        print(f"Waveform sent to Pi Zero for run_id={self._metadata['currentRunId']}")
+        print(f"Waveform sequence sent to Pi Zero for run_id={self._metadata['currentRunId']}")
 
-    async def menu_action_show_status(self) -> None:
-        """Placeholder: print orchestrator state; replace with real status logic."""
-        open_ = bool(self._serial and self._serial.is_open)
-        print(
-            f"[TODO] port={self.cfg.port!r} baud={self.cfg.baudrate} "
-            f"serial_open={open_} tx_queue_size≈{self._tx_queue.qsize()}"
-        )
+    async def menu_action_get_waveform(self) -> None:
+        """Get the waveform sequence in use on the Pi Zero."""
 
-    async def menu_action_send_example_frame(self) -> None:
-        """Placeholder: queue a framed test payload; adjust type/src/payload."""
+        # Queue the GET_WAVEFORM_SEQ message to the Pi Zero
         await self.enqueue_tx(
-            msg_type=0x02, src_id=0x10, payload=b"menu-test"
+            msg_type=up.MessageType.GET_WAVEFORM_SEQ,
+            src_id=up.SourceId.RPI3_BPLUS,
+            payload=b"0x00"   # unused as the command requires no arguments.
         )
-        print("[TODO] Queued example frame for TX (see menu_action_send_example_frame).")
+        print(f"Reading waveform sequence from Pi Zero")
 
-    async def menu_action_data_collection_placeholder(self) -> None:
-        """Placeholder: hook into run metadata / collection (e.g. data_collection_starter)."""
-        print(
-            "[TODO] Wire this to your workflow, e.g. import and call logic from "
-            "data_collection_starter, or enqueue protocol messages to the peer."
+    async def menu_action_set_brake(self) -> None:
+        """Set the brake sequence to use on the Pi Zero."""
+
+        if len(self._metadata['currentRunDict']) == 0:
+            print(f"Set valid run ID first. run_id={self._metadata['currentRunId']}")
+            return
+
+        # Get brake sequence parameters and create the payload for serial transmission.
+        # payload will be binary after encoding.
+        payload = json.dumps(self._metadata['currentRunDict']['(level, duration)'], separators=(',', ':')).encode('utf-8')
+
+        # Queue the SET_WAVEFORM_SEQ message to the Pi Zero
+        await self.enqueue_tx(
+            msg_type=up.MessageType.SET_BRAKE_SEQ,
+            src_id=up.SourceId.RPI3_BPLUS,
+            payload=payload
         )
+        print(f"Brake sequence sent to Pi Zero for run_id={self._metadata['currentRunId']}")
+
+    async def menu_action_get_brake(self) -> None:
+        """Get the brake sequence in use on the Pi Zero."""
+
+        # Queue the GET_WAVEFORM_SEQ message to the Pi Zero
+        await self.enqueue_tx(
+            msg_type=up.MessageType.GET_BRAKE_SEQ,
+            src_id=up.SourceId.RPI3_BPLUS,
+            payload=b"0x00"   # unused as the command requires no arguments.
+        )
+        print(f"Reading brake sequence from Pi Zero")
+
+    async def menu_action_set_pwm_freq(self) -> None:
+        """Set the PWM frequency to use on the Pi Zero."""
+
+        if len(self._metadata['currentRunDict']) == 0:
+            print(f"Set valid run ID first. run_id={self._metadata['currentRunId']}")
+            return
+
+        # Get brake sequence parameters and create the payload for serial transmission.
+        # payload will be binary after encoding.
+        payload = str(self._metadata['currentRunDict']['pwm_freq_hz']).encode('utf-8')  # pwm is an int object
+
+        # Queue the SET_PWM_FREQ message to the Pi Zero
+        await self.enqueue_tx(
+            msg_type=up.MessageType.SET_PWM_FREQ,
+            src_id=up.SourceId.RPI3_BPLUS,
+            payload=payload
+        )
+        print(f"PWM frequency in Hz sent to Pi Zero for run_id={self._metadata['currentRunId']}")
+
+    async def menu_action_get_pwm_freq(self) -> None:
+        """Get the PWM frequency in use on the Pi Zero."""
+
+        # Queue the GET_WAVEFORM_SEQ message to the Pi Zero
+        await self.enqueue_tx(
+            msg_type=up.MessageType.GET_PWM_FREQ,
+            src_id=up.SourceId.RPI3_BPLUS,
+            payload=b"0x00"   # unused as the command requires no arguments.
+        )
+        print(f"Reading PWM frequency from Pi Zero")
+
+    async def menu_action_start_capture(self) -> None:
+        """Start the data capture on the Pi Zero."""
+        await self.enqueue_tx(
+            msg_type=up.MessageType.START_CAPTURE,
+            src_id=up.SourceId.RPI3_BPLUS,
+            payload=b"0x00"   # unused as the command requires no arguments.
+        )
+        print(f"Starting data capture on Pi Zero")
+
+    async def menu_action_stop_capture(self) -> None:
+        """Stop the data capture on the Pi Zero."""
+        await self.enqueue_tx(
+            msg_type=up.MessageType.STOP_CAPTURE,
+            src_id=up.SourceId.RPI3_BPLUS,
+            payload=b"0x00"   # unused as the command requires no arguments.
+        )
+        print(f"Stopping data capture on Pi Zero")
+
+   ###########################################################
+   # MENU ACTION DEFINITIONS END HERE
+   ###########################################################
 
     async def stop(self) -> None:
         """Graceful shutdown: stop tasks and close serial."""

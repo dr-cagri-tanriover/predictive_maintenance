@@ -97,9 +97,9 @@ class SourceId:
     Node or logical source ID in the SRC field (use class attributes only).
     """
     UNKNOWN = 0x00
-    RPI3_BPLUS = 0x10
-    RP2040_ZERO = 0x20
-    PI_PICO = 0x30
+    RPI3_BPLUS = 0x11
+    RP2040_ZERO = 0x21
+    PI_PICO = 0x31
 
 
 # Filled from the classes above (single source of truth).
