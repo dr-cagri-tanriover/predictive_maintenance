@@ -83,7 +83,7 @@ class MessageType:
     #HEARTBEAT = 0x5F  # matches pi3_main heartbeat / lab traffic
 
     # RP2040_ZERO messages [0x60-0xBF]
-
+    ALIVE_PING = 0x60  # Sends a ping to the Pi Zero to indicate that the RP2040 is alive and functioning.
 
     # PI_PICO messages [0xC0-0xFF]
 

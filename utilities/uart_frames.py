@@ -91,7 +91,7 @@ def crc16(data):
     return crc
 
 
-def build_frame(msg_type, src_id, seq, payload):
+def build_frame(msg_type, src_id, seq = 0x00, payload=b"0x00"):
     """
     Pack one complete frame for transmission.
 
@@ -150,6 +150,22 @@ def parse_frame_bytes(frame_bytes):
 # --- Stream decoder: SOF lock + integrity check ------------------------------
 
 
+def _bytearray_drop_prefix(buf, n):
+    """
+    Remove the first *n* bytes from *buf* in place.
+
+    MicroPython's ``bytearray`` does not support ``del buf[:n]``; assignment
+    ``buf[:] = buf[n:]`` works on CPython and MicroPython.
+    """
+    if n <= 0:
+        return
+    ln = len(buf)
+    if n >= ln:
+        buf[:] = b""  # replacement for buf.clear()
+    else:
+        buf[:] = buf[n:]
+
+
 class FrameDecoder:
     """
     Incrementally consume arbitrary UART chunks, emit complete validated frames.
@@ -167,7 +183,7 @@ class FrameDecoder:
 
     def reset(self):
         """Clear internal buffer (e.g. after UART error / baud change)."""
-        self._buf.clear()
+        self._buf[:] = b""  # replacement for self._buf.clear()
 
     def feed(self, data):
         """
@@ -190,18 +206,17 @@ class FrameDecoder:
                 if b0 == SOF1 and (i + 1) < n and self._buf[i + 1] == SOF2:
                     # Drop any noise before this sync pair so _buf[0:2] is SOF.
                     if i:
-                        del self._buf[:i]
+                        _bytearray_drop_prefix(self._buf, i)
                     break
                 i += 1
             else:
                 # No SOF1+SOF2 pair anywhere in _buf (scan exhausted index i).
                 if n and self._buf[-1] == SOF1:
                     # Keep the trailing SOF1: the next ``feed`` may append SOF2 as the new last byte.
-                    # ``del self._buf[:-1]`` removes the prefix only; the final byte (SOF1) stays.
-                    del self._buf[:-1]
+                    _bytearray_drop_prefix(self._buf, len(self._buf) - 1)
                 else:
                     # No trailing SOF1 to “bridge” to the next chunk; nothing here can start a frame.
-                    self._buf.clear()
+                    self._buf[:] = b""  # replacement for self._buf.clear()
                 return
 
             # _buf layout: [0]=SOF1, [1]=SOF2, [2]=TYPE, [3]=SRC, [4]=SEQ, [5]=LEN, then payload + CRC.
@@ -211,7 +226,7 @@ class FrameDecoder:
             ln = self._buf[5]  # LEN: payload byte count (0..255 on wire)
             if ln > self._max_payload:
                 # Length policy violation: drop SOF and re-scan (may be false sync in noise).
-                del self._buf[:2]
+                _bytearray_drop_prefix(self._buf, 2)
                 continue
 
             total = 2 + _HDR_AFTER_SOF + ln + _CRC_LEN  # whole frame size in bytes
@@ -219,10 +234,10 @@ class FrameDecoder:
                 return  # wait for payload + CRC16
 
             # TYPE..PAYLOAD is what the CRC covers; CRC is stored little-endian after payload.
-            # Slice the buffer (do not keep a memoryview across ``del self._buf``).
+            # Copy slices before mutating the buffer (MicroPython: no del buf[:n] on bytearray).
             body = self._buf[2 : 6 + ln]
             crc_wire = self._buf[6 + ln] | (self._buf[6 + ln + 1] << 8)
-            del self._buf[:total]  # consume this frame from the stream buffer
+            _bytearray_drop_prefix(self._buf, total)  # consume this frame from the stream buffer
 
             if crc16(body) != crc_wire:
                 continue  # corrupt frame: discarded; outer loop hunts next SOF

@@ -1,6 +1,9 @@
 # main.py — asyncio template: polling + timed steps
-from machine import Pin, PWM, Timer
+from machine import Pin, PWM, Timer, UART
 import uasyncio as asyncio
+# Be sure to copy the utilities folder with the required *.py files in it to RP2040 for the following to work !
+from utilities.uart_frames import FrameDecoder, build_frame
+from utilities.uart_primitives import SourceId, MessageType
 
 # Pin assignments
 PWM_OUT_PIN = 2 # Set up PWM on pin GP2
@@ -11,6 +14,7 @@ BRAKE_L4_PIN = 8 # Set up brake on pin GP8
 
 UART_TX_PIN = 12 # Set up UART0 TX on pin GP12
 UART_RX_PIN = 13 # Set up UART0 RX on pin GP13
+UART_BAUD = 115200  # must match the Pi / peer
 
 #IRQ_BLUE_LED_PIN = 7  # GP7 drives a separate LED via Timer IRQ
 #IRQ_YELLOW_LED_PIN = 8  # GP8 drives a separate LED via Timer IRQ
@@ -97,6 +101,70 @@ current_composite_waveform_idx = 0
 # blue_timer = Timer()
 # yellow_timer = Timer()
 brake_timer = Timer()
+
+# --- UART0 (GP12 TX / GP13 RX): nonblocking driver + uasyncio tasks -------------
+# timeout=0 keeps reads nonblocking; RX task polls uart.any() and yields often.
+uart = UART(
+    0,
+    UART_BAUD,
+    tx=Pin(UART_TX_PIN),
+    rx=Pin(UART_RX_PIN),
+    bits=8,
+    parity=None,
+    stop=1,
+    timeout=0,
+)
+
+# many MicroPython uasyncio builds have no asyncio.Queue; use a list FIFO.
+# (Some MP builds require iterable+maxlen for collections.deque — plain list is safest.)
+uart_tx_buf = []
+_rx_decoder = FrameDecoder()
+_build_frame = build_frame
+
+# RP2040 / Pi peer source id (see uart_primitives.SourceId on host)
+R2040_SOURCE_ID = 0x20
+
+
+async def _handle_uart_frame(frame):
+    """Replace with your routing (e.g. match frame["type"] from uart_primitives)."""
+    t, src, seq = frame["type"], frame["src"], frame["seq"]
+    print("[UART RX] type=0x%02X src=0x%02X seq=%s payload=%r" % (t, src, seq, frame["payload"]))
+
+
+async def task_uart_rx():
+    """Read UART in small chunks, decode framed packets, keep scheduling fair."""
+    await ready_event.wait()
+    while state["running"]:
+        n = uart.any()
+        if n > 0:
+            chunk = uart.read(min(n, 256))
+            if chunk:
+                for fr in _rx_decoder.feed(chunk):
+                    await _handle_uart_frame(fr)
+        # Tiny yield: balance latency vs CPU (use sleep_ms(0) for max responsiveness).
+        await asyncio.sleep_ms(1)
+
+    return
+
+async def task_uart_tx():
+    """Drain uart_tx_buf and write to UART (Queue not available in all uasyncio)."""
+    await ready_event.wait()
+    while state["running"]:
+        if uart_tx_buf:
+            item = uart_tx_buf.pop(0)
+            if item and isinstance(item, (bytes, bytearray, memoryview)):
+                uart.write(item)
+        else:
+            await asyncio.sleep_ms(1)  # yield; wake quickly when work arrives
+
+# Optional: one-time startup frame to the peer.
+async def task_uart_hello_once():
+    await ready_event.wait()  # happens once after power up !
+    p = b"RP2040-ready"
+    fr = _build_frame(MessageType.ALIVE_PING, SourceId.RP2040_ZERO, payload=p)
+    uart_tx_buf.append(fr)
+    await asyncio.sleep(0)  # yield so task_uart_tx can run
+    return
 
 # def _blink_blue_led_irq_cb(_t):
 #     irq_blue_led.toggle()
@@ -185,6 +253,9 @@ async def main():
   # asyncio.gather() continues to run until all coroutines return. Typically they never returh due to infinite while loops in them to continue running.
   # state["running"] = true keeps each task running indefinitely.
   await asyncio.gather(
+      task_uart_rx(),
+      task_uart_tx(),
+      task_uart_hello_once(),
       task_next_brake_prep(),
       task_timer_irq_consumer(),
   )
