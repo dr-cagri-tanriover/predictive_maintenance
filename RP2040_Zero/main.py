@@ -29,7 +29,7 @@ mco = MotorControl()  # Motor control object initialized here.
 
 # Shared acess device initializations
 led = PWM(Pin(PWM_OUT_PIN))
-led.freq(mco.read_pwm_Hz())  # Set PWM frequency
+led.freq(mco.pwm_Hz)  # Get PWM frequency
 brake_l1_pin = Pin(BRAKE_L1_PIN, Pin.OUT, value=0)
 brake_l2_pin = Pin(BRAKE_L2_PIN, Pin.OUT, value=0)
 brake_l3_pin = Pin(BRAKE_L3_PIN, Pin.OUT, value=0)
@@ -153,7 +153,7 @@ async def task_uart_rx():
     return
 
 async def task_uart_tx():
-    """Drain uart_tx_buf and write to UART (Queue not available in all uasyncio)."""
+    """Drain uart_tx_buf and write to UART."""
     await ready_event.wait()
     while state["running"]:
         if uart_tx_buf:
@@ -170,6 +170,46 @@ async def task_uart_hello_once():
     fr = _build_frame(MessageType.ALIVE_PING, SourceId.RP2040_ZERO, payload=p)
     uart_tx_buf.append(fr)
     await asyncio.sleep(0)  # yield so task_uart_tx can run
+    return
+
+async def task_check_capture_start():
+    # Checks to see if capture start is triggered by Pi3.
+    global mco
+    global data_capture_start_event
+    global data_capture_stop_event
+
+    await ready_event.wait()
+
+    while state["running"]:
+        if mco.states.get("capture_start"):
+          # Capture is started by Pi3
+          data_capture_start_event.set()  # Capture start event set. Only Pi3 capture stop UART message will clear it.
+          data_capture_stop_event.clear()  # Capture stop event cleared. Only Pi3 capture stop UART message will set it again.
+          await data_capture_stop_event.wait()  # Wait on data capture stop event to be set before checking for capture start again.
+        else:
+          # Capture not triggered yet. Check after some time.
+          await asyncio.sleep(0.050)  # 50 ms yield to other functions to run.
+    
+    return
+
+async def task_check_capture_stop():
+    # Checks to see if capture stop is triggered by Pi3.
+    global mco
+    global data_capture_start_event
+    global data_capture_stop_event
+
+    await ready_event.wait()
+
+    while state["running"]:
+        if mco.states.get("capture_stop"):
+          # Capture is stopped by Pi3
+          data_capture_start_event.clear()  # Capture start event cleared. Only Pi3 capture start UART message will set it again.
+          data_capture_stop_event.set()  # Capture stop event set. Only Pi3 capture start UART message will clear it again.
+          await data_capture_start_event.wait()  # Wait on data capture start event to be set before checking for capture stop again.
+        else:
+          # Capture not stopped yet. Check after some time.
+          await asyncio.sleep(0.050)  # 50 ms yield to other functions to run.
+    
     return
 
 # def _blink_blue_led_irq_cb(_t):
@@ -194,9 +234,9 @@ async def task_next_brake_prep():    # This task updates in an event-driven way.
     global brake_attribs
 
     await ready_event.wait()  # this task blocks until ready_event.set() runs in main()
-    await data_capture_start_event.wait() # Wait on data capture message from Pi3.
 
     while state["running"]:
+      await data_capture_start_event.wait() # Wait on data capture message from Pi3. (If event already set, that's fine too!)
       await next_brake_prep_event.wait()  # Yielding back to the scheduler until irq prompts the next brake state to transition to.
       # Timer interrupt set next_brake_prep_event.
 
@@ -215,9 +255,10 @@ async def task_timer_irq_consumer():
     global current_composite_waveform_idx
     
     await ready_event.wait()
-    await data_capture_start_event.wait() # Wait on data capture message from Pi3.
 
     while state["running"]:
+        
+        await data_capture_start_event.wait() # Wait on data capture message from Pi3. (If event already set, that's fine too!)
 
         led.duty_u16(mco.get_U16_duty(current_composite_waveform_idx))
 
@@ -247,6 +288,7 @@ def brake_state_update():
 # Tasks can wait on this after hardware is ready
 ready_event = asyncio.Event()  # Starts in the cleared state.
 data_capture_start_event = asyncio.Event()  # Triggers the start of data capture from Pi3.
+data_capture_stop_event = asyncio.Event()  # Triggers the stop of data capture from Pi3.
 next_brake_prep_event = asyncio.Event()  # Triggers the update of the next brake state to transition to.
 
 async def main():
@@ -257,7 +299,8 @@ async def main():
 
   # Following line ensures no task runs until hardware is reliably initialized as above!
   ready_event.set()  # any task with await ready_event.wait() is blocked until this line is executed.
-  
+  data_capture_stop_event.set()  # Capture stop event set. At power up, capture is stopped by default!
+
   # All coroutines are started below, and each starts to run concurrently (time-sliced by awaits in each coroutine).
   # asyncio.gather() continues to run until all coroutines return. Typically they never returh due to infinite while loops in them to continue running.
   # state["running"] = true keeps each task running indefinitely.
@@ -267,6 +310,8 @@ async def main():
       task_uart_hello_once(),
       task_next_brake_prep(),
       task_timer_irq_consumer(),
+      task_check_capture_start(),
+      task_check_capture_stop(),
   )
 
 # After importing modules and defining globals, the following part is read next.

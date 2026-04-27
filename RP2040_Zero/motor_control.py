@@ -9,7 +9,11 @@ _MSG_HANDLER_MAP = {
     MessageType.SET_WAVEFORM_SEQ: "update_waveform_seq",
     MessageType.GET_WAVEFORM_SEQ: "read_waveform_seq",
     MessageType.SET_BRAKE_SEQ: "update_brake_seq",
+    MessageType.GET_BRAKE_SEQ: "read_brake_seq",
     MessageType.SET_PWM_FREQ: "update_pwm_Hz",
+    MessageType.GET_PWM_FREQ: "read_pwm_Hz",
+    MessageType.START_CAPTURE: "set_capture_start",
+    MessageType.STOP_CAPTURE: "set_capture_stop",
 }
 
 class MotorControl:
@@ -17,6 +21,9 @@ class MotorControl:
         self.waveform_seq = [] # list of lists where each list inside is [duty,duration] and duty out of 100  value: duration in seconds (duty 100 means 100% on)
         self.brake_seq = []  # List of lists where each list inside is [level,duration] where levels are 0,1,2,3,4 and value: duration in seconds (level = 0 is no brake applied.)
         self.pwm_Hz = 1000 # frequency of the PWM signal in Hz (Default = 1000 Hz)
+
+        # Operation states for Pi Zero. These can be queried externally to control async tasks in main.py.
+        self.states = {"capture_start": False, "capture_stop": True}
 
     def get_U16_duty(self, waveform_seq_ID):
         duty_percent = self.waveform_seq[waveform_seq_ID][0]  # duty percent out of 100
@@ -48,27 +55,43 @@ class MotorControl:
         """Binary payload is expected to be a list of lists where each list inside is [duty,duration]"""
         # First decode payload binary string to a list of lists for processing.
         self.waveform_seq = json.loads(binary_payload.decode("utf-8"))
-        #print(f"Waveform sequence updated successfully.")
         # Echo the current waveform sequence as UART payload.
         return self.generate_waveform_seq_response()
 
-    def update_brake_seq(self, binary_paylad):
-        return None
+    def update_brake_seq(self, binary_payload):
+        """Binary payload is expected to be a list of lists where each list inside is [level,duration]"""
+        # First decode payload binary string to a list of lists for processing.
+        self.brake_seq = json.loads(binary_payload.decode("utf-8"))
+        # Echo the current waveform sequence as UART payload.
+        return self.generate_brake_seq_response()
 
-    def update_pwm_Hz(self, binary_paylad):
-        return None
+    def update_pwm_Hz(self, binary_payload):
+        """PWM Hz as UTF-8 text: one byte per decimal digit (e.g. 1000 Hz -> b'1000'), not a packed binary int."""
+        self.pwm_Hz = int(binary_payload.decode("utf-8").strip())
+        # Echo the current PWM frequency as UART payload.
+        return self.generate_pwm_Hz_response()
+
+    def set_capture_start(self, binary_payload=None):
+        self.states["capture_start"] = True  # This will signal the task in main to kick off data capture.
+        self.states["capture_stop"] = False  # Capture stop is cleared by capture start.
+        return None  # No UART response sent for capture start.
+
+    def set_capture_stop(self, binary_payload=None):
+        self.states["capture_stop"] = True  # This will signal the task in main to stop data capture.
+        self.states["capture_start"] = False  # Capture start is cleared by capture stop.
+        return None  # No UART response sent for capture stop.
 
     ##### Read back methods
 
-    def read_waveform_seq(self, binary_paylad=None):
+    def read_waveform_seq(self, binary_payload=None):
         # Echo current waveform sequence in use.
         return self.generate_waveform_seq_response()
 
-    def read_brake_seq(self, binary_paylad=None):
-        return self.brake_seq
+    def read_brake_seq(self, binary_payload=None):
+        return self.generate_brake_seq_response()
 
-    def read_pwm_Hz(self, binary_paylad=None):
-        return self.pwm_Hz
+    def read_pwm_Hz(self, binary_payload=None):
+        return self.generate_pwm_Hz_response()
 
     ##### UART response messages
 
@@ -76,5 +99,19 @@ class MotorControl:
         return build_frame(
             MessageType.CURRENT_WAVEFORM_SEQ,
             SourceId.RP2040_ZERO,
-            payload=json.dumps(self.waveform_seq).encode("utf-8")
+            payload=json.dumps(self.waveform_seq).encode("utf-8")  # Convert list of lists to JSON string and encode to bytes
+            )
+
+    def generate_brake_seq_response(self):
+        return build_frame(
+            MessageType.CURRENT_BRAKE_SEQ,
+            SourceId.RP2040_ZERO,
+            payload=json.dumps(self.brake_seq).encode("utf-8")  # Convert list of lists to JSON string and encode to bytes
+            )
+
+    def generate_pwm_Hz_response(self):
+        return build_frame(
+            MessageType.CURRENT_PWM_FREQ,
+            SourceId.RP2040_ZERO,
+            payload=str(self.pwm_Hz).encode("utf-8")  # Convert integer to string and encode to bytes
             )
