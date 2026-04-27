@@ -85,6 +85,10 @@ class MessageType:
     # RP2040_ZERO messages [0x60-0xBF]
     ALIVE_PING = 0x60  # Sends a ping to the Pi Zero to indicate that the RP2040 is alive and functioning.
 
+    CURRENT_WAVEFORM_SEQ = 0X70  # Sends the current waveform sequence stored on Pi Zero
+    CURRENT_BRAKE_SEQ = 0X71  # Sends the current brake sequence stored on Pi Zero
+    CURRENT_PWM_FREQ = 0X72  # Sends the current PWM frequency stored on Pi Zero
+
     # PI_PICO messages [0xC0-0xFF]
 
 

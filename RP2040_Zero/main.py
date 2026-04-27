@@ -1,9 +1,10 @@
 # main.py — asyncio template: polling + timed steps
 from machine import Pin, PWM, Timer, UART
 import uasyncio as asyncio
-# Be sure to copy the utilities folder with the required *.py files in it to RP2040 for the following to work !
-from utilities.uart_frames import FrameDecoder, build_frame
-from utilities.uart_primitives import SourceId, MessageType
+from motor_control import MotorControl
+# Be sure to copy the required *.py files from utilities to RP2040 for the following to work !
+from uart_frames import FrameDecoder, build_frame
+from uart_primitives import SourceId, MessageType
 
 # Pin assignments
 PWM_OUT_PIN = 2 # Set up PWM on pin GP2
@@ -16,16 +17,19 @@ UART_TX_PIN = 12 # Set up UART0 TX on pin GP12
 UART_RX_PIN = 13 # Set up UART0 RX on pin GP13
 UART_BAUD = 115200  # must match the Pi / peer
 
+mco = MotorControl()  # Motor control object initialized here.
+
 #IRQ_BLUE_LED_PIN = 7  # GP7 drives a separate LED via Timer IRQ
 #IRQ_YELLOW_LED_PIN = 8  # GP8 drives a separate LED via Timer IRQ
 
 # Parameter initializations
-PWM_FREQ_HZ = 1000  # Frequency of PWM in Hertz
+#PWM_FREQ_HZ = 1000  # Frequency of PWM in Hertz
+
 # LED_BLINK_PERIOD_MS = 500  # GP7 toggle period (ms)
 
 # Shared acess device initializations
 led = PWM(Pin(PWM_OUT_PIN))
-led.freq(PWM_FREQ_HZ)  # Set PWM frequency
+led.freq(mco.read_pwm_Hz())  # Set PWM frequency
 brake_l1_pin = Pin(BRAKE_L1_PIN, Pin.OUT, value=0)
 brake_l2_pin = Pin(BRAKE_L2_PIN, Pin.OUT, value=0)
 brake_l3_pin = Pin(BRAKE_L3_PIN, Pin.OUT, value=0)
@@ -91,7 +95,7 @@ brake_attribs = {
 brake_sequence = {0: "L0", 1: "L1", 2: "L2", 3: "L3", 4: "L4"}  # user defined
 current_brake_idx = 0  # starting brake index initialized here by user.
 
-composite_waveform_period_seq = {0: "pwm_25", 1: "pwm_50", 2: "pwm_75", 3: "pwm_50"}
+#composite_waveform_period_seq = {0: "pwm_25", 1: "pwm_50", 2: "pwm_75", 3: "pwm_50"}
 current_composite_waveform_idx = 0
 
 # irq_blue_led = Pin(IRQ_BLUE_LED_PIN, Pin.OUT, value=0)
@@ -121,15 +125,17 @@ uart_tx_buf = []
 _rx_decoder = FrameDecoder()
 _build_frame = build_frame
 
-# RP2040 / Pi peer source id (see uart_primitives.SourceId on host)
-R2040_SOURCE_ID = 0x20
-
 
 async def _handle_uart_frame(frame):
-    """Replace with your routing (e.g. match frame["type"] from uart_primitives)."""
+    """Full UART frame received. ROute it to the correct processing function next."""
+    global mco  # object that stores all current motor related attributes.
+
     t, src, seq = frame["type"], frame["src"], frame["seq"]
     print("[UART RX] type=0x%02X src=0x%02X seq=%s payload=%r" % (t, src, seq, frame["payload"]))
-
+    response = mco.process_rx_uart_frame(frame)
+    if response != None:
+      # Response is a valid UART frame. Queue it for transmission.
+      uart_tx_buf.append(response)
 
 async def task_uart_rx():
     """Read UART in small chunks, decode framed packets, keep scheduling fair."""
@@ -188,6 +194,7 @@ async def task_next_brake_prep():    # This task updates in an event-driven way.
     global brake_attribs
 
     await ready_event.wait()  # this task blocks until ready_event.set() runs in main()
+    await data_capture_start_event.wait() # Wait on data capture message from Pi3.
 
     while state["running"]:
       await next_brake_prep_event.wait()  # Yielding back to the scheduler until irq prompts the next brake state to transition to.
@@ -204,20 +211,21 @@ async def task_next_brake_prep():    # This task updates in an event-driven way.
 
 
 async def task_timer_irq_consumer():
+    global mco  # object that stores all current motor related attributes.
     global current_composite_waveform_idx
-    global composite_waveform_period_seq
-    global waveforms
     
     await ready_event.wait()
+    await data_capture_start_event.wait() # Wait on data capture message from Pi3.
 
     while state["running"]:
-        key = composite_waveform_period_seq[current_composite_waveform_idx]
-        seg = waveforms[key]
-        led.duty_u16(seg["duty"])
 
-        await asyncio.sleep(seg["timeSec"])  # Used instead of Timer() interrupt
-        current_composite_waveform_idx = (current_composite_waveform_idx + 1) % len(composite_waveform_period_seq)
-        if not TIMER_IRQ_REPEAT:
+        led.duty_u16(mco.get_U16_duty(current_composite_waveform_idx))
+
+        # TODO - Here, queue a uart Tx message to indicate which waveform is currently being applied with a timestamp.
+        await asyncio.sleep(mco.get_duration_sec(current_composite_waveform_idx))  # Used instead of Timer() interrupt
+        current_composite_waveform_idx = (current_composite_waveform_idx + 1) % len(mco.waveform_seq)
+        
+        if not TIMER_IRQ_REPEAT:  # indefinitely repeats the waveform sequence if TIMER_IRQ_REPEAT is True
             break
 
 
@@ -238,6 +246,7 @@ def brake_state_update():
 
 # Tasks can wait on this after hardware is ready
 ready_event = asyncio.Event()  # Starts in the cleared state.
+data_capture_start_event = asyncio.Event()  # Triggers the start of data capture from Pi3.
 next_brake_prep_event = asyncio.Event()  # Triggers the update of the next brake state to transition to.
 
 async def main():
@@ -260,7 +269,7 @@ async def main():
       task_timer_irq_consumer(),
   )
 
-# After importing modules and defining globals, the folowing part is read next.
+# After importing modules and defining globals, the following part is read next.
 loop = asyncio.new_event_loop()
 loop.run_until_complete(main())  # main() gets executed immediately.
 loop.run_forever()
