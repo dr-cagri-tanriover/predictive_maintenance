@@ -29,8 +29,14 @@ class MotorControl:
         duty_percent = self.waveform_seq[waveform_seq_ID][0]  # duty percent out of 100
         return int(duty_percent * _MAX_DUTY_U16 / 100)
 
-    def get_duration_sec(self, waveform_seq_ID):
+    def get_waveform_duration_sec(self, waveform_seq_ID):
         return self.waveform_seq[waveform_seq_ID][1]  # duration in seconds
+
+    def get_brake_duration_sec(self, brake_seq_ID):
+        return self.brake_seq[brake_seq_ID][1]  # duration in seconds
+
+    def get_brake_level(self, brake_seq_ID):
+        return self.brake_seq[brake_seq_ID][0]  # brake level (0,1,2,3,4)
 
     def is_waveform_seq_valid(self):
         return len(self.waveform_seq) > 0

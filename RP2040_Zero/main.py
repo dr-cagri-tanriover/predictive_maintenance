@@ -19,14 +19,6 @@ UART_BAUD = 115200  # must match the Pi / peer
 
 mco = MotorControl()  # Motor control object initialized here.
 
-#IRQ_BLUE_LED_PIN = 7  # GP7 drives a separate LED via Timer IRQ
-#IRQ_YELLOW_LED_PIN = 8  # GP8 drives a separate LED via Timer IRQ
-
-# Parameter initializations
-#PWM_FREQ_HZ = 1000  # Frequency of PWM in Hertz
-
-# LED_BLINK_PERIOD_MS = 500  # GP7 toggle period (ms)
-
 # Shared acess device initializations
 led = PWM(Pin(PWM_OUT_PIN))
 led.freq(mco.pwm_Hz)  # Get PWM frequency
@@ -34,6 +26,14 @@ brake_l1_pin = Pin(BRAKE_L1_PIN, Pin.OUT, value=0)
 brake_l2_pin = Pin(BRAKE_L2_PIN, Pin.OUT, value=0)
 brake_l3_pin = Pin(BRAKE_L3_PIN, Pin.OUT, value=0)
 brake_l4_pin = Pin(BRAKE_L4_PIN, Pin.OUT, value=0)
+
+brake_level_gpio_map = {
+  0: None,  # no brake is applied (i.e., all brake gpio pins are turned off)
+  1: brake_l1_pin, # brake level 1 is applied to brake_l1_pin (lowest brake level)
+  2: brake_l2_pin, # brake level 2 is applied to brake_l2_pin 
+  3: brake_l3_pin, # brake level 3 is applied to brake_l3_pin
+  4: brake_l4_pin  # brake level 4 is applied to brake_l4_pin
+}
 
 # --- Shared state (optional) ---
 state = {
@@ -43,67 +43,10 @@ state = {
 # After each segment duration, advance waveform (set False to run only the first segment once).
 TIMER_IRQ_REPEAT = True
 
-# Waveform components to use to generate a composite waveform to drive the motor.
-waveforms = {
-            "pwm_25":
-                    {
-                        "duty": 16384, # duty cycle used
-                        "timeSec": 1  # duration of regime
-                    },
-            "pwm_50":
-                    {
-                        "duty": 32768, # duty cycle used
-                        "timeSec": 1 # duration of regime
-                    },
-            "pwm_75":
-                    {
-                        "duty": 49151, # duty cycle used
-                        "timeSec": 1 # duration of regime
-                    }
-             }
-
-# Brake sequence to use to generate a composite waveform to drive the motor.
-brake_attribs = {
-            "L0":
-                    {
-                        "timeSec": 2, # 2 seconds of no braking
-                        "gpioPin": None  # No GPIO pin to turn on/off
-                    },
-            "L1":
-                    {
-                        "timeSec": 7, # duration of regime
-                        "gpioPin": brake_l1_pin
-                    },
-            "L2":
-                    {
-                        "timeSec": 5, # duration of regime
-                        "gpioPin": brake_l2_pin
-                    },
-            "L3":
-                    {
-                        "timeSec": 3, # duration of regime
-                        "gpioPin": brake_l3_pin
-                    },
-            "L4":
-                    {
-                        "timeSec": 1, # duration of regime
-                        "gpioPin": brake_l4_pin
-                    }
-             }
-
-# L0: no brakes applied, L4: full brakes applied
-brake_sequence = {0: "L0", 1: "L1", 2: "L2", 3: "L3", 4: "L4"}  # user defined
-current_brake_idx = 0  # starting brake index initialized here by user.
-
-#composite_waveform_period_seq = {0: "pwm_25", 1: "pwm_50", 2: "pwm_75", 3: "pwm_50"}
-current_composite_waveform_idx = 0
-
-# irq_blue_led = Pin(IRQ_BLUE_LED_PIN, Pin.OUT, value=0)
-# irq_yellow_led = Pin(IRQ_YELLOW_LED_PIN, Pin.OUT, value=0)
+current_brake_idx = 0  # starting brake index initialized here.
+current_composite_waveform_idx = 0  # starting waveform index initialized here.
 
 # Dedicated hardware timer for LED blink IRQ (kept independent from waveform logic).
-# blue_timer = Timer()
-# yellow_timer = Timer()
 brake_timer = Timer()
 
 # --- UART0 (GP12 TX / GP13 RX): nonblocking driver + uasyncio tasks -------------
@@ -212,45 +155,38 @@ async def task_check_capture_stop():
     
     return
 
-# def _blink_blue_led_irq_cb(_t):
-#     irq_blue_led.toggle()
-
-# def _blink_yellow_led_irq_cb(_t):
-#     irq_yellow_led.toggle()
-
 def _apply_nextbrake_irq_cb(_t):
   # Fast and effective ISR!
   next_brake_prep_event.set()  # Trigger the next brake state to transition to.
 
-# def start_irq_led_blink(period_ms=LED_BLINK_PERIOD_MS):
-#     blue_timer.init(period=period_ms, mode=Timer.PERIODIC, callback=_blink_blue_led_irq_cb)
-#     yellow_timer.init(period=int(period_ms/2), mode=Timer.PERIODIC, callback=_blink_yellow_led_irq_cb)
-
 
 # ---------- Your app tasks ----------
-async def task_next_brake_prep():    # This task updates in an event-driven way..
+async def task_brake_management():    # This task updates in an event-driven way..
     global current_brake_idx
-    global brake_sequence
-    global brake_attribs
+    global brake_level_gpio_map
+    global mco
 
     await ready_event.wait()  # this task blocks until ready_event.set() runs in main()
 
     while state["running"]:
       await data_capture_start_event.wait() # Wait on data capture message from Pi3. (If event already set, that's fine too!)
+      
+      brake_state_update()  # runs the current brake state when data capture starts as per current_brake_idx setting.
+      next_brake_prep_event.clear()  # event cleared. Only Timer interrupt will set it again!
+
       await next_brake_prep_event.wait()  # Yielding back to the scheduler until irq prompts the next brake state to transition to.
       # Timer interrupt set next_brake_prep_event.
 
       # Turn current brake GPIO pin off
-      if brake_attribs[brake_sequence[current_brake_idx]]["gpioPin"] is not None:
-        brake_attribs[brake_sequence[current_brake_idx]]["gpioPin"].off()  # stop currently active brake.
+      _brake_level = mco.get_brake_level(current_brake_idx)  # brake level (0,1,2,3,4)
+      if brake_level_gpio_map[_brake_level] is not None:
+        brake_level_gpio_map[_brake_level].off()  # turn off the current brake GPIO pin.
       #else since no gpio is applicable to current brake state, there is no gpio to turn off!
 
-      current_brake_idx = (current_brake_idx + 1) % len(brake_sequence)  # next brake sequence index updated.
-      brake_state_update()  # runs the current brake state as per current_brake_idx setting. Runs at startup.
-      next_brake_prep_event.clear()  # event cleared. Only Timer interrupt will set it again!
+      current_brake_idx = (current_brake_idx + 1) % len(mco.brake_seq)  # next brake sequence index updated.
 
 
-async def task_timer_irq_consumer():
+async def task_waveform_timer_service():
     global mco  # object that stores all current motor related attributes.
     global current_composite_waveform_idx
     
@@ -263,7 +199,7 @@ async def task_timer_irq_consumer():
         led.duty_u16(mco.get_U16_duty(current_composite_waveform_idx))
 
         # TODO - Here, queue a uart Tx message to indicate which waveform is currently being applied with a timestamp.
-        await asyncio.sleep(mco.get_duration_sec(current_composite_waveform_idx))  # Used instead of Timer() interrupt
+        await asyncio.sleep(mco.get_waveform_duration_sec(current_composite_waveform_idx))  # Used instead of Timer() interrupt
         current_composite_waveform_idx = (current_composite_waveform_idx + 1) % len(mco.waveform_seq)
         
         if not TIMER_IRQ_REPEAT:  # indefinitely repeats the waveform sequence if TIMER_IRQ_REPEAT is True
@@ -272,12 +208,16 @@ async def task_timer_irq_consumer():
 
 def brake_state_update():
   global current_brake_idx
-  global brake_sequence
+  global brake_level_gpio_map
+  global mco
 
-  _brake_duration = brake_attribs[brake_sequence[current_brake_idx]]["timeSec"]
-  _gpio_pin = brake_attribs[brake_sequence[current_brake_idx]]["gpioPin"]
+  _brake_duration = mco.get_brake_duration_sec(current_brake_idx)  # stored in seconds
+  _brake_level = mco.get_brake_level(current_brake_idx)  # brake level (0,1,2,3,4)
+  _gpio_pin = brake_level_gpio_map[_brake_level]  # GPIO pin to turn on/off
 
+  # Update global timer object next to trigger the next brake state to transition to.
   brake_timer.init(period=_brake_duration*1000, mode=Timer.ONE_SHOT, callback=_apply_nextbrake_irq_cb)
+
   # Turn on relevant GPIO to apply the brake
   if _gpio_pin is not None:
     _gpio_pin.on()  # brake is physically applied now
@@ -295,8 +235,6 @@ async def main():
   # 1) Hardware init (I2C, displays, etc.) — before unblocking tasks
   # start_irq_led_blink()
 
-  brake_state_update()  # runs the current brake state at startup as per current_brake_idx setting.
-
   # Following line ensures no task runs until hardware is reliably initialized as above!
   ready_event.set()  # any task with await ready_event.wait() is blocked until this line is executed.
   data_capture_stop_event.set()  # Capture stop event set. At power up, capture is stopped by default!
@@ -308,8 +246,8 @@ async def main():
       task_uart_rx(),
       task_uart_tx(),
       task_uart_hello_once(),
-      task_next_brake_prep(),
-      task_timer_irq_consumer(),
+      task_brake_management(),
+      task_waveform_timer_service(),
       task_check_capture_start(),
       task_check_capture_stop(),
   )
