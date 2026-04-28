@@ -148,6 +148,7 @@ async def task_check_capture_stop():
           # Capture is stopped by Pi3
           data_capture_start_event.clear()  # Capture start event cleared. Only Pi3 capture start UART message will set it again.
           data_capture_stop_event.set()  # Capture stop event set. Only Pi3 capture start UART message will clear it again.
+          reset_waveform_brake_tasks()  # Reset the waveform and brake indices to the start of the sequence.
           await data_capture_start_event.wait()  # Wait on data capture start event to be set before checking for capture stop again.
         else:
           # Capture not stopped yet. Check after some time.
@@ -204,6 +205,23 @@ async def task_waveform_timer_service():
         
         if not TIMER_IRQ_REPEAT:  # indefinitely repeats the waveform sequence if TIMER_IRQ_REPEAT is True
             break
+
+def reset_waveform_brake_tasks():
+  global current_composite_waveform_idx
+  global current_brake_idx
+
+  # Stop the PWM generator until next activation
+  led.duty_u16(0)
+
+  # Stop applying any brakes until next activation
+  for _brake_level in range(len(mco.brake_seq)):
+    _gpio_pin = brake_level_gpio_map[_brake_level]
+    if _gpio_pin is not None:
+      _gpio_pin.off()
+
+  # Reset the waveform and brake indices to the start of the sequence
+  current_composite_waveform_idx = 0
+  current_brake_idx = 0
 
 
 def brake_state_update():
